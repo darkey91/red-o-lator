@@ -1,7 +1,6 @@
 #pragma once
 
-#include <CL/opencl.h>
-#include <CL/cl_ext.h>
+#include <common/cl.h>
 #include <map>
 #include <optional>
 #include <stdexcept>

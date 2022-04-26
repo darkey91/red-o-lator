@@ -5,7 +5,7 @@
  * Sourced from: https://github.com/Oblomov/clinfo/blob/master/src/ext.h
  */
 
-#include <CL/cl.h>
+#include <common/cl.h>
 
 #define CL_DEVICE_PREFERRED_WORK_GROUP_SIZE_AMD         0x4030
 #define CL_DEVICE_MAX_WORK_GROUP_SIZE_AMD               0x4031
