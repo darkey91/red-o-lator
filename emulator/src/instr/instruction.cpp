@@ -38,7 +38,9 @@ KernelCode::KernelCode(const std::vector<std::string>& instruction) {
 Instruction* KernelCode::get_instr(uint64_t address) const {
     assert(address % 4 == 0 && "Wrong instr address: not a multiple of 4");
     auto instrIter = code.find(address);
-    assert(instrIter != code.end() && "Wrong instruction address: instr is nullptr");
+    if (instrIter == code.end()) {
+        throw std::runtime_error(std::string("No instruction at address " + std::to_string(address)));
+    }
     return instrIter->second.get();
 }
 
@@ -94,10 +96,13 @@ bool Operand::is_label(const std::string& arg) {
 
 std::pair<RegisterType, size_t> Operand::get_register(const std::string& arg) {
     if (arg == "vcc") {
-        return std::make_pair(VCC, 1);
+        return std::make_pair(VCC, 2);
     }
     if (arg == "scc") {
         return std::make_pair(SCC, 1);
+    }
+    if (arg == "exec") {
+        return std::make_pair(EXEC, 2);
     }
     if (utils::startsWith(arg, "lgkmcnt")) {
         return std::make_pair(LGKMCNT, 1);

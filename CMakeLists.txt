@@ -34,6 +34,3 @@ add_subdirectory(common)
 add_subdirectory(driver)
 add_subdirectory(emulator)
 add_subdirectory(debugger)
-
-add_executable(temp
-        main.cpp)

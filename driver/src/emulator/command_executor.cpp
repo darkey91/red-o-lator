@@ -11,6 +11,7 @@
 
 void writeArg(uint64_t&, size_t&, const KernelArgument&);
 void readArgs(size_t, const KernelArgument&);
+size_t evaluateStorageSize(const std::vector<KernelArgument>& args);
 
 size_t evaluateArgSize(const std::vector<KernelArgument>& args);
 
@@ -20,7 +21,7 @@ void executeCommand(const KernelExecutionCommand& command) {
                               command.globalWorkSize, command.localWorkSize,
                               kernel->config);
     auto storage = Storage::get_instance();
-    storage->init(10000000);
+    storage->init(evaluateStorageSize(kernel->getArguments()));
     uint64_t addr = 0;
     storage->write_data(addr, 0, uint64_t(kernelConfig.get_X_offset()));
     storage->write_data(addr, 8, uint64_t(kernelConfig.get_Y_offset()));
@@ -126,4 +127,8 @@ void readArgs(size_t addr, const KernelArgument& arg) {
     } else {
         assert(false && "Unsupported argument kind");
     }
+}
+
+size_t evaluateStorageSize(const std::vector<KernelArgument>& args) {
+    return 10000000;
 }
