@@ -391,7 +391,7 @@ static inline const InstructionView instructionRepo[] = {
     {"v_mac_f32", V_MAC_F32, VOP2, UNDEFINED},
     {"v_madmk_f32", V_MADMK_F32, VOP2, UNDEFINED},
     {"v_madak_f32", V_MADAK_F32, VOP2, UNDEFINED},
-    {"v_add_co_u32", V_ADD_CO_U32, VOP2, UNDEFINED},
+    {"v_add_co_u32", V_ADD_CO_U32, VOP3B, VOP3B}, //todo
     {"v_subrev_co_u32", V_SUBREV_CO_U32, VOP2, UNDEFINED},
     {"v_subb_co_u32", V_SUBB_CO_U32, VOP2, UNDEFINED},
     {"v_subbrev_co_u32", V_SUBBREV_CO_U32, VOP2, UNDEFINED},
@@ -423,7 +423,7 @@ static inline const InstructionView instructionRepo[] = {
     {"v_lshlrev_b32", V_LSHLREV_B32, VOP2, VOP3A},
     {"v_lshr_b32", V_LSHR_B32, VOP2, VOP3A},
     // VOP2: extended VOP3B
-    {"v_addc_co_u32", V_ADDC_CO_U32, VOP2, VOP3B},
+    {"v_addc_co_u32", V_ADDC_CO_U32, VOP3B, VOP3B}, //todo
     {"v_addc_u32", V_ADDC_U32, VOP2, VOP3B},
     {"v_add_u32", V_ADD_U32, VOP2, VOP3B},
     {"v_subrev_u32", V_SUBREV_U32, VOP2, VOP3B},
@@ -500,7 +500,7 @@ static inline const InstructionView instructionRepo[] = {
     {"v_cmpx_ge_i32", V_CMPX_GE_I32, VOPC, VOP3A},
     {"v_cmpx_tru_i32", V_CMPX_TRU_I32, VOPC, VOP3A},
     {"v_cmpx_f_u32", V_CMPX_F_U32, VOPC, VOP3A},
-    {"v_cmpx_lt_u32", V_CMPX_LT_U32, VOPC, VOP3A},
+    {"v_cmpx_lt_u32", V_CMPX_LT_U32, VOPC, UNDEFINED},
     {"v_cmpx_eq_u32", V_CMPX_EQ_U32, VOPC, VOP3A},
     {"v_cmpx_le_u32", V_CMPX_LE_U32, VOPC, VOP3A},
     {"v_cmpx_gt_u32", V_CMPX_GT_U32, VOPC, VOP3A},

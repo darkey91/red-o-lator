@@ -435,6 +435,13 @@ void run_v_xad_u32(WfStateVOP3& state, size_t i) {
 void run_v_mul_lo_u32(WfStateVOP3& state, size_t i) {
     state.VDST[i] = static_cast<uint32_t>(state.SRC0[i] * state.SRC1[i]);
 }
+void run_v_add_co_u32(WfStateVOP3& state, size_t i) {
+    uint64_t temp = uint64_t(state.SRC0[i]) + uint64_t(state.SRC1[i]);
+    state.VDST[i] = state.CLAMP ? std::min(temp, 0xffffffffull) : temp;
+    state.SRC0[i] = 0;
+    uint64_t mask = 1ull<<i;
+    state.SRC0[i] = (state.SRC0[i]&~mask) | ((temp >> 32) ? mask : 0);
+}
 }
 void run_vop3(const Instruction& instr, Wavefront* wf) {
     auto state = wf->get_vop3_state(instr);
@@ -502,6 +509,7 @@ void run_vop3(const Instruction& instr, Wavefront* wf) {
             case V_XAD_U32: run_v_xad_u32(state, wiInd); break;
             case V_MUL_LO_U32: run_v_mul_lo_u32(state, wiInd); break;
             case V_ADDC_CO_U32: run_v_addc_co_u32(state, wiInd); break;
+            case V_ADD_CO_U32: run_v_add_co_u32(state, wiInd); break;
             default: UNSUPPORTED_INSTRUCTION("VOP3", get_mnemonic(instr.get_key()));
         }
     }

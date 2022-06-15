@@ -316,6 +316,9 @@ void Wavefront::update_with_vop2_state(const Instruction &instruction,
 }
 
 WfStateVOP3 Wavefront::get_vop3_state(const Instruction &instruction) {
+    if (instruction.get_operands_count() > 4) {
+        throw std::runtime_error(std::string("Unexpected amount of operands for VOP3 instruction ") + instruction.get_raw_instr());
+    }
     assert(instruction.get_operands_count() <= 4 &&
            "Unexpected amount of operands for VOP3 instruction");
     auto VDST = std::vector<uint64_t>();
