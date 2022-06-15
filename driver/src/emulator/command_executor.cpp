@@ -108,13 +108,16 @@ void readArgs(size_t addr, const KernelArgument& arg) {
     auto info = arg.info.get();
     if (std::holds_alternative<CLMem*>(arg.value.value().value)) {
         auto value = std::get<CLMem*>(arg.value.value().value);
-
+        if (!value->kernelCanWrite) {
+            //todo log?
+            return;
+        }
         switch (info->kind) {
-            case SCALAR: assert(false && "todo");
+            case SCALAR: {
+                std::vector<uint8_t> data = storage->read_data(addr, 0, value->size);
+                memcpy(value->address, data.data(), data.size());
+            }
             case POINTER: {
-                if (!value->kernelCanWrite) {
-                    return;
-                }
                 auto realAddr = storage->read_8_bytes(addr);
                 std::vector<uint8_t> data = storage->read_data(realAddr, 0, value->size);
                 memcpy(value->address, data.data(), data.size());
